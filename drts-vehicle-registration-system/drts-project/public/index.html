@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRTS Online Vehicle Registration System | Botswana</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════════════════════ -->
+<nav class="navbar">
+  <a class="navbar-brand" href="#" onclick="showPage('page-home')">
+    <div style="width:40px;height:40px;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.3rem">🇧🇼</div>
+    <div>
+      <div>DRTS Vehicle Registration</div>
+      <div style="font-size:.68rem;font-weight:400;opacity:.8">Department of Road Transport &amp; Safety • Botswana</div>
+    </div>
+  </a>
+  <div class="navbar-nav">
+    <a class="nav-link" href="#" onclick="showPage('page-status')">🔍 <span>Track</span></a>
+    <a class="nav-link hidden" id="nav-dashboard" href="#" onclick="showPage('page-dashboard');loadDashboard()">📋 <span>My Applications</span></a>
+    <a class="nav-link hidden" id="nav-apply" href="#" onclick="showPage('page-apply');goToStep(1)">➕ <span>Apply</span></a>
+    <a class="nav-link hidden" id="nav-admin" href="#" onclick="showPage('page-admin');loadAdminDashboard()">🏛️ <span>Admin</span></a>
+    <a class="nav-link" id="nav-login" href="#" onclick="showPage('page-login')">Login</a>
+    <a class="nav-link btn btn-accent btn-sm" id="nav-register" href="#" onclick="showPage('page-register')" style="margin-left:.25rem">Register</a>
+    <span id="nav-username" class="text-muted hidden" style="font-size:.85rem;margin-left:.5rem"></span>
+    <a class="nav-link hidden" id="nav-logout" href="#" style="color:#fca5a5">Logout</a>
+  </div>
+</nav>
+
+<!-- Dashboard alert bar -->
+<div id="dashboard-alert" style="max-width:1100px;margin:.5rem auto;padding:0 1.5rem"></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div style="font-size:4rem;margin-bottom:1rem">🚗</div>
+    <h1>Online Vehicle Registration</h1>
+    <p>Register your vehicle from anywhere in Botswana. Submit documents, track status, and pay fees — all from your browser.</p>
+    <div class="hero-buttons">
+      <button class="btn btn-accent" style="font-size:1rem;padding:.75rem 2rem" onclick="showPage('page-register')">Get Started →</button>
+      <button class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:1rem;padding:.75rem 2rem" onclick="showPage('page-status')">Track an Application</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="features">
+      <div class="feature-item">
+        <div class="feature-icon">📝</div>
+        <h3>Online Application</h3>
+        <p>Submit new registrations, renewals, and transfers online — no queues, no travel.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📁</div>
+        <h3>Document Upload</h3>
+        <p>Upload your ID, proof of address, vehicle photos, and insurance digitally.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💳</div>
+        <h3>Secure Payment</h3>
+        <p>Pay registration fees securely via Stripe using debit or credit card.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔍</div>
+        <h3>Real-Time Tracking</h3>
+        <p>Track your application status anytime using your reference number.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🏛️</div>
+        <h3>DRTS Dashboard</h3>
+        <p>Officers review, approve or reject applications through a secure admin portal.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔒</div>
+        <h3>Role-Based Access</h3>
+        <p>Multi-tier authentication ensures only authorised users access each function.</p>
+      </div>
+    </div>
+
+    <div class="card text-center" style="padding:2rem;background:linear-gradient(135deg,#003580 0%,#0052cc 100%);color:#fff">
+      <h2 style="margin-bottom:.5rem">Available across all of Botswana</h2>
+      <p style="opacity:.85;margin-bottom:1.5rem">From Gaborone to Ghanzi, Kgalagadi to Chobe — register your vehicle wherever you are.</p>
+      <button class="btn btn-accent" onclick="showPage('page-register')">Create an Account</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE: LOGIN
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-login">
+  <div class="container-sm">
+    <div class="card" style="margin-top:2rem">
+      <div class="card-header"><span class="card-title">🔑 Sign In</span></div>
+      <div id="login-alert"></div>
+      <form id="login-form">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+      </form>
+      <div class="divider"></div>
+      <p class="text-center text-muted">Don't have an account? <a href="#" onclick="showPage('page-register')">Register here</a></p>
+      <p class="text-center text-muted mt-1">
+        <small>Demo: admin@drts.gov.bw | officer@drts.gov.bw (set password in DB)</small>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE: REGISTER
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-register">
+  <div class="container-sm">
+    <div class="card" style="margin-top:2rem">
+      <div class="card-header"><span class="card-title">📋 Create Account</span></div>
+      <div id="register-alert"></div>
+      <form id="register-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="full_name" placeholder="Thabo Mokoena" required>
+          </div>
+          <div class="form-group">
+            <label>National ID</label>
+            <input type="text" name="national_id" placeholder="301012345" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="+267 71 234 567" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Physical Address</label>
+          <input type="text" name="address" placeholder="Plot 123, Main Mall, Gaborone">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Min. 8 characters" required>
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" name="confirm_password" placeholder="Repeat password" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+      </form>
+      <div class="divider"></div>
+      <p class="text-center text-muted">Already have an account? <a href="#" onclick="showPage('page-login')">Sign in</a></p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE: STATUS LOOKUP
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-status">
+  <div class="container-sm">
+    <div class="card" style="margin-top:2rem">
+      <div class="card-header"><span class="card-title">🔍 Track Application</span></div>
+      <p class="text-muted" style="margin-bottom:1rem">Enter your reference number to check the status of your application.</p>
+      <div class="d-flex gap-1">
+        <input type="text" id="ref-input" placeholder="e.g. DRTS-2026-123456" style="flex:1">
+        <button class="btn btn-primary" id="status-lookup-btn">Check Status</button>
+      </div>
+      <div id="status-result" style="margin-top:1rem"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE: USER DASHBOARD
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-dashboard">
+  <div class="container">
+    <div class="card-header" style="margin-bottom:1rem;padding-bottom:0;border:none">
+      <h2 style="color:var(--primary)">My Applications</h2>
+      <button class="btn btn-primary" onclick="showPage('page-apply');goToStep(1)">➕ New Application</button>
+    </div>
+    <div class="card">
+      <div id="dashboard-applications"><div class="text-center"><span class="spinner"></span></div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE: APPLY
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-apply">
+  <div class="container" style="max-width:720px">
+    <h2 style="color:var(--primary);margin-bottom:1.5rem">Vehicle Registration Application</h2>
+
+    <!-- Stepper -->
+    <div class="stepper">
+      <div class="step active" id="stepper-1">
+        <div class="step-circle">1</div>
+        <div class="step-label">Vehicle Details</div>
+      </div>
+      <div class="step" id="stepper-2">
+        <div class="step-circle">2</div>
+        <div class="step-label">Documents</div>
+      </div>
+      <div class="step" id="stepper-3">
+        <div class="step-circle">3</div>
+        <div class="step-label">Submitted</div>
+      </div>
+    </div>
+
+    <div id="apply-alert"></div>
+
+    <form id="apply-form">
+      <input type="hidden" id="app-vehicle-id" name="app_vehicle_id">
+
+      <!-- Step 1: Vehicle Details -->
+      <div class="app-step-panel active" id="step-panel-1">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Vehicle Information</span></div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Application Type</label>
+              <select name="application_type" required>
+                <option value="">Select type…</option>
+                <option value="new">New Registration</option>
+                <option value="renewal">Renewal</option>
+                <option value="transfer">Ownership Transfer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Vehicle Type</label>
+              <select name="vehicle_type_id" required>
+                <option value="">Select type…</option>
+                <option value="1">Private Car — P 550</option>
+                <option value="2">Light Commercial — P 750</option>
+                <option value="3">Heavy Commercial — P 1,200</option>
+                <option value="4">Motorcycle — P 300</option>
+                <option value="5">Minibus / Combi — P 850</option>
+                <option value="6">Trailer — P 200</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Make</label>
+              <input type="text" name="make" placeholder="e.g. Toyota" required>
+            </div>
+            <div class="form-group">
+              <label>Model</label>
+              <input type="text" name="model" placeholder="e.g. Hilux" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Year</label>
+              <input type="number" name="year" placeholder="2023" min="1950" max="2026" required>
+            </div>
+            <div class="form-group">
+              <label>Colour</label>
+              <input type="text" name="color" placeholder="e.g. Silver" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Chassis / VIN Number</label>
+              <input type="text" name="chassis_number" placeholder="17-character VIN" required>
+              <div class="form-hint">Found on the vehicle's dashboard or door frame</div>
+            </div>
+            <div class="form-group">
+              <label>Engine Number <small>(optional)</small></label>
+              <input type="text" name="engine_number" placeholder="Engine number">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Fuel Type</label>
+            <select name="fuel_type" required>
+              <option value="">Select…</option>
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Electric">Electric</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-primary btn-block" id="app-next-1">Next: Upload Documents →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Document Upload -->
+      <div class="app-step-panel" id="step-panel-2" style="display:none">
+        <div class="card">
+          <div class="card-header"><span class="card-title">📁 Supporting Documents</span></div>
+          <div class="alert alert-info">Upload clear photos or PDF scans. Max 5MB per file. JPEG, PNG, or PDF.</div>
+
+          <div class="form-group">
+            <label>Document Type</label>
+            <select id="doc-type-select">
+              <option value="id_copy">National ID Copy</option>
+              <option value="proof_of_address">Proof of Address</option>
+              <option value="vehicle_photo">Vehicle Photo</option>
+              <option value="insurance">Insurance Certificate</option>
+              <option value="purchase_receipt">Purchase Receipt</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="upload-area" id="doc-upload-area">
+            <div class="upload-icon">📂</div>
+            <p style="font-weight:600">Click to select a file</p>
+            <p class="text-muted" style="font-size:.82rem;margin-top:.25rem">or drag and drop here</p>
+            <input type="file" id="doc-file-input" accept=".jpg,.jpeg,.png,.webp,.pdf">
+            <button type="button" class="btn btn-outline btn-sm mt-2" id="doc-upload-btn" onclick="document.getElementById('doc-file-input').click()">Select File</button>
+          </div>
+          <div id="uploaded-files-list" class="uploaded-files"></div>
+
+          <div class="d-flex gap-2 mt-2">
+            <button type="button" class="btn btn-outline" id="app-back-2">← Back</button>
+            <button type="button" class="btn btn-primary" id="app-next-2" style="flex:1">Submit Application →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Submitted Confirmation -->
+      <div class="app-step-panel" id="step-panel-3" style="display:none">
+        <div class="card text-center" style="padding:2.5rem">
+          <div style="font-size:4rem;margin-bottom:1rem">✅</div>
+          <h2 style="color:var(--success);margin-bottom:.75rem">Application Submitted!</h2>
+          <p class="text-muted">Your reference number is:</p>
+          <div style="font-size:1.5rem;font-weight:800;color:var(--primary);margin:.75rem 0;letter-spacing:.05em" id="app-ref-number">—</div>
+          <div class="alert alert-info" style="text-align:left;margin-bottom:1.25rem">
+            📋 A DRTS officer will review your application. Once approved, you will be able to pay the registration fee of <strong id="app-fee-amount"></strong> to complete your registration.
+          </div>
+          <div class="d-flex gap-2 justify-between" style="flex-wrap:wrap">
+            <button class="btn btn-outline" onclick="showPage('page-dashboard');loadDashboard()">View My Applications</button>
+            <button class="btn btn-primary" onclick="showPage('page-status')">Track this Application</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE: ADMIN DASHBOARD
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-admin">
+  <div class="container" style="max-width:1200px">
+    <div class="d-flex justify-between align-center" style="margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem">
+      <h2 style="color:var(--primary)">🏛️ DRTS Administration Dashboard</h2>
+      <button class="btn btn-outline" onclick="loadAdminDashboard()">↻ Refresh</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid" id="admin-stats">
+      <div class="stat-card"><div class="stat-number">—</div><div class="stat-label">Loading…</div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card">
+      <div class="d-flex gap-2 align-center" style="flex-wrap:wrap">
+        <select id="admin-status-filter" style="width:auto;min-width:150px">
+          <option value="">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="under_review">Under Review</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+          <option value="paid">Paid</option>
+        </select>
+        <input type="text" id="admin-search" placeholder="Search by name, ref, chassis…" style="flex:1;min-width:200px">
+        <button class="btn btn-primary" id="admin-search-btn">Search</button>
+      </div>
+    </div>
+
+    <!-- Applications Table -->
+    <div class="card" style="padding:0">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Applicant</th>
+              <th>Vehicle</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Payment</th>
+              <th>Submitted</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-table-body">
+            <tr><td colspan="8" class="text-center"><span class="spinner"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODALS
+═══════════════════════════════════════════════════════════ -->
+
+<!-- Status Detail Modal -->
+<div class="modal-overlay hidden" id="status-modal" onclick="if(event.target===this)this.classList.add('hidden')">
+  <div class="modal">
+    <div class="modal-header">
+      <span style="font-weight:700;font-size:1.05rem">Application Details</span>
+      <button class="modal-close" onclick="document.getElementById('status-modal').classList.add('hidden')">✕</button>
+    </div>
+    <div id="status-modal-body"></div>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal-overlay hidden" id="payment-modal" onclick="if(event.target===this)this.classList.add('hidden')">
+  <div class="modal">
+    <div class="modal-header">
+      <span style="font-weight:700;font-size:1.05rem">💳 Pay Registration Fee</span>
+      <button class="modal-close" onclick="document.getElementById('payment-modal').classList.add('hidden')">✕</button>
+    </div>
+    <div id="pay-alert"></div>
+    <div class="alert alert-info">Amount due: <strong id="pay-amount"></strong></div>
+
+    <!-- Stripe card element would be mounted here in production -->
+    <div style="background:#f8faff;border:1.5px solid var(--border);border-radius:8px;padding:1.25rem;margin-bottom:1rem">
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">💳 Card Details (Stripe Secure Payment)</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Card Number</label>
+          <input type="text" placeholder="4242 4242 4242 4242" maxlength="19">
+        </div>
+        <div class="form-group">
+          <label>Expiry</label>
+          <input type="text" placeholder="MM / YY" maxlength="7">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>CVV</label>
+        <input type="text" placeholder="•••" maxlength="4" style="max-width:100px">
+      </div>
+      <p style="font-size:.75rem;color:var(--muted)">🔒 Payments processed securely via Stripe. DRTS does not store card details.</p>
+    </div>
+    <button class="btn btn-accent btn-block" id="pay-confirm-btn">Confirm Payment</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer>
+  <p>Department of Road Transport &amp; Safety (DRTS) — Botswana Government</p>
+  <p style="margin-top:.35rem">
+    Online Vehicle Registration System | 
+    Developed by Theo T Kentsheng (202201306) | 
+    University of Botswana — Computer Science (Software Engineering) | 2026
+  </p>
+  <p style="margin-top:.35rem">Supervisors: Dr Zimudzi &amp; Dr Zuva</p>
+</footer>
+
+<script src="js/app.js"></script>
+
+<!-- Fix step panels to use display block/none via JS -->
+<script>
+// Override app-step-panel display since CSS class alone controls it
+document.querySelectorAll('.app-step-panel').forEach((p, i) => {
+  p.style.display = i === 0 ? 'block' : 'none';
+});
+
+const origGoToStep = goToStep;
+window.goToStep = function(n) {
+  document.querySelectorAll('.app-step-panel').forEach((p, i) => {
+    p.style.display = i + 1 === n ? 'block' : 'none';
+  });
+  document.querySelectorAll('.step').forEach((s, i) => {
+    s.classList.toggle('active', i + 1 === n);
+    s.classList.toggle('done', i + 1 < n);
+    const circle = s.querySelector('.step-circle');
+    if (i + 1 < n) circle.textContent = '✓';
+    else circle.textContent = i + 1;
+  });
+};
+</script>
+</body>
+</html>
